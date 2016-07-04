@@ -14,6 +14,7 @@ def checkout(commit):
    process = subprocess.run(["git", "checkout", commit], stderr=subprocess.PIPE)
    gitOutput = str(process.stderr).split()
    print(gitOutput)
+   
    if "b\"error:" in gitOutput:
       print("oli error")
    #if process.stderr != None:

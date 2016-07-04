@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FreeFileSync XmlFormat="5" XmlType="BATCH">
+    <MainConfig>
+        <Comparison>
+            <Variant>TimeAndSize</Variant>
+            <Symlinks>Exclude</Symlinks>
+            <IgnoreTimeShift/>
+        </Comparison>
+        <SyncConfig>
+            <Variant>Update</Variant>
+            <CustomDirections>
+                <LeftOnly>right</LeftOnly>
+                <RightOnly>left</RightOnly>
+                <LeftNewer>right</LeftNewer>
+                <RightNewer>left</RightNewer>
+                <Different>none</Different>
+                <Conflict>none</Conflict>
+            </CustomDirections>
+            <DetectMovedFiles>false</DetectMovedFiles>
+            <DeletionPolicy>RecycleBin</DeletionPolicy>
+            <VersioningFolder Style="Replace"/>
+        </SyncConfig>
+        <GlobalFilter>
+            <Include>
+                <Item>sq-analyzer.py</Item>
+            </Include>
+            <Exclude>
+                <Item>\System Volume Information\</Item>
+                <Item>\$Recycle.Bin\</Item>
+                <Item>\RECYCLER\</Item>
+                <Item>\RECYCLED\</Item>
+                <Item>*\desktop.ini</Item>
+                <Item>*\thumbs.db</Item>
+                <Item>\.git\</Item>
+                <Item>\ffs_logs\</Item>
+                <Item>\ffs_batch\</Item>
+                <Item>.gitignore</Item>
+            </Exclude>
+            <TimeSpan Type="None">0</TimeSpan>
+            <SizeMin Unit="None">0</SizeMin>
+            <SizeMax Unit="None">0</SizeMax>
+        </GlobalFilter>
+        <FolderPairs>
+            <Pair>
+                <Left>C:\Dev\Projects\sq-analyzer</Left>
+                <Right>C:\Studies\Diplomityö\vaadin</Right>
+            </Pair>
+        </FolderPairs>
+        <OnCompletion/>
+    </MainConfig>
+    <BatchConfig>
+        <HandleError>Ignore</HandleError>
+        <RunMinimized>true</RunMinimized>
+        <LogfileFolder Limit="1000">C:\Dev\Projects\sq-analyzer\ffs_logs</LogfileFolder>
+    </BatchConfig>
+</FreeFileSync>
