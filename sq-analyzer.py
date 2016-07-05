@@ -35,9 +35,8 @@ def checkout(commit):
                             universal_newlines=True)
    print((" ").join(process.args)) # Prints executed command
    print(process.stderr)
-   gitOutput = str(process.stderr).split()
+
    if "error:" in process.stderr:
-      print("Error while trying to checkout a commit: " + commit)
       shutDown()
 
 def runSQanalysis(version, date):
