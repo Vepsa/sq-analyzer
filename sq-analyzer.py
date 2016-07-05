@@ -33,14 +33,12 @@ def legalDate(date):
 def checkout(commit):
    process = subprocess.run(["git", "checkout", commit], stderr=subprocess.PIPE,
                             universal_newlines=True)
-   print((" ").join(process.args))
+   print((" ").join(process.args)) # Prints executed command
    print(process.stderr)
    gitOutput = str(process.stderr).split()
-   if "error:" in gitOutput:
-      print("oli error")
-   #if process.stderr != None:
-      #print("Error while trying to checkout a commit: " + commit)
-      #exit()
+   if "error:" in process.stderr:
+      print("Error while trying to checkout a commit: " + commit)
+      shutDown()
 
 def runSQanalysis(version, date):
    pass
