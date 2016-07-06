@@ -14,7 +14,7 @@ def openFile(fileName):
 def legalArguments(arguments):
    if len(arguments) != 3:
       return False
-   if len(arguments[0]) != 7: # Length of the commit checksum short version
+   if len(arguments[0]) != 7: # Commit checksum length
       return False
    if legalDate(arguments[2]) == False:
       return False
@@ -41,13 +41,13 @@ def checkout(commit):
       shutDown()
 
 def runSQ(version, date, scannerPath):
-   projectVersion = str("-D sonar.projectVersion=" + version)
-   projectDate = str("-D sonar.projectDate=" + date)
+   projectVersion = str("sonar.projectVersion=" + version)
+   projectDate = str("sonar.projectDate=" + date)
    #print(scannerPath + " " + projectVersion + " " + projectDate)
-   process = subprocess.run([scannerPath, projectVersion, projectDate],
+   process = subprocess.run([scannerPath, "-D", projectVersion, "-D", projectDate],
                             universal_newlines=True)
-   print("SonarQube analysis was run with arguments:" + process.args)
-   
+   print("SonarQube analysis was run with arguments:" + (" ").join(process.args))
+
 def skipLine(arguments):
    print("There is a problem with commit info file at line " + str(arguments))
    print("Skipping line.")
