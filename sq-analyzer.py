@@ -63,6 +63,10 @@ def skipLine(arguments):
 def printCmd(cmd):
    print("Running subprocess command: " + cmd)
 
+def fileLen(fileName):
+   for i, line in enumerate(fileName):
+      pass
+   return i + 1
 #-------------------------------------------------------------------------------
 # Main program starts
 #-------------------------------------------------------------------------------
@@ -81,6 +85,9 @@ f = openFile(sys.argv[1])
 if f == False:
    print("File '" + sys.argv[1] + "' was not found.")
    shutDown()
+
+lines = fileLen(f)
+print("File has %d lines." % (lines))
 
 for line in f:
    arguments = line.split()
