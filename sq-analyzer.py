@@ -25,32 +25,43 @@ def legalDate(date):
    date = date.split("-")
    if len(date) != 3:
       return False
-   if len(date[0]) != 4 or len(date[1]) != 2 or len(date[2]) != 2:
-      return False
+   for index in range(len(date)):
+      if date[index].isdigit() == False:
+         return False
+      if index == 0 and len(date[index]) != 4:
+         return False
+      elif index != 0 and len(date[index]) != 2:
+         return False
 
    return True
 
-def checkout(commit):
-   process = subprocess.run(["git", "checkout", commit],
-                            stderr=subprocess.PIPE,
-                            universal_newlines=True)
-   print((" ").join(process.args)) # Prints executed command
-   print(process.stderr)
+def checkout(commit, testRun):
+   printCmd("git checkout " + commit)
+   if(testRun == False):
+      process = subprocess.run(["git", "checkout", commit],
+                               stderr=subprocess.PIPE,
+                               universal_newlines=True)
+      if "error:" in process.stderr:
+         shutDown()
 
-   if "error:" in process.stderr:
-      shutDown()
-
-def runSQ(version, date, scannerPath):
+def runSQ(version, date, scannerPath, testRun):
    projectVersion = str("sonar.projectVersion=" + version)
    projectDate = str("sonar.projectDate=" + date)
-   #print(scannerPath + " " + projectVersion + " " + projectDate)
-   process = subprocess.run([scannerPath, "-D", projectVersion, "-D", projectDate],
-                            universal_newlines=True)
-   print("SonarQube analysis was run with arguments:" + (" ").join(process.args))
+   printCmd(scannerPath + " -D " + projectVersion + " -D " + projectDate)
+   if(testRun == False):
+      process = subprocess.run([scannerPath,
+                               "-D",
+                               projectVersion,
+                               "-D",
+                               projectDate],
+                               universal_newlines=True)
 
 def skipLine(arguments):
    print("There is a problem with commit info file at line " + str(arguments))
    print("Skipping line.")
+
+def printCmd(cmd):
+   print("Running subprocess command: " + cmd)
 
 #-------------------------------------------------------------------------------
 # Main program starts
@@ -59,7 +70,10 @@ def skipLine(arguments):
 print("sq-analyzer v0.1\n")
 
 # Check the parameters given to program are legal
-if len(sys.argv) != 3:
+test = False
+if len(sys.argv) == 4 and sys.argv[3] == "test":
+   test = True
+elif len(sys.argv) < 3 or len(sys.argv) > 4:
    print("Please specify the commit info file and sonar scanner path as a parameters for program.")
    shutDown()
 
@@ -75,8 +89,8 @@ for line in f:
       version = arguments[1]
       date = arguments[2]
 
-      checkout(commit)
-      runSQ(version, date, sys.argv[2])
+      checkout(commit, test)
+      runSQ(version, date, sys.argv[2], test)
    else:
       skipLine(arguments)
 
